@@ -14,7 +14,6 @@ package main
 
 import (
     "context"
-    "fmt"
     "github.com/dooray-go/dooray"
     "log"
     "time"
