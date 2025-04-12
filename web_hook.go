@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/dooray-go/dooray/utils"
 	"io"
 	"net/http"
 )
@@ -62,7 +63,7 @@ func PostWebhookCustomHTTPContext(ctx context.Context, url string, httpClient *h
 func checkStatusCode(resp *http.Response) error {
 
 	if resp.StatusCode != http.StatusOK {
-		return StatusCodeError{Code: resp.StatusCode, Status: resp.Status}
+		return utils.StatusCodeError{Code: resp.StatusCode, Status: resp.Status}
 	}
 
 	return nil

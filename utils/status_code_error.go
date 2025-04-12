@@ -1,4 +1,4 @@
-package dooray
+package utils
 
 import (
 	"fmt"

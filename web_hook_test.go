@@ -3,16 +3,17 @@ package dooray
 import (
 	"encoding/json"
 	"net/http"
+	"net/http/httptest"
 	"reflect"
 	"testing"
 )
 
 func TestPostWebhook_OK(t *testing.T) {
-	once.Do(startServer)
 
 	var receivedPayload WebhookMessage
 
-	http.HandleFunc("/services", func(rw http.ResponseWriter, r *http.Request) {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/services", func(rw http.ResponseWriter, r *http.Request) {
 		rw.Header().Set("Content-Type", "application/json")
 
 		decoder := json.NewDecoder(r.Body)
@@ -24,8 +25,10 @@ func TestPostWebhook_OK(t *testing.T) {
 		response := []byte(`{}`)
 		rw.Write(response)
 	})
+	server := httptest.NewServer(mux)
+	defer server.Close()
 
-	url := "http://" + serverAddr + "/services"
+	url := server.URL + "/services"
 
 	payload := &WebhookMessage{
 		Text: "Test Text",
