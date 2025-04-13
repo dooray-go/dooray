@@ -2,6 +2,7 @@ package calendar
 
 import (
 	"context"
+	"github.com/dooray-go/dooray/utils"
 	"io"
 	"net/http"
 	"time"
@@ -31,8 +32,8 @@ func (c *Calendar) GetEventsCustomHTTPContext(ctx context.Context, apikey string
 		query.Add("calendars", calendars)
 	}
 
-	query.Add("timeMin", FormatTimeToISO8601(timeMin))
-	query.Add("timeMax", FormatTimeToISO8601(timeMax))
+	query.Add("timeMin", utils.FormatTimeToISO8601(timeMin))
+	query.Add("timeMax", utils.FormatTimeToISO8601(timeMax))
 
 	req.URL.RawQuery = query.Encode()
 
