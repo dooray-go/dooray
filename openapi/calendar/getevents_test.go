@@ -1,6 +1,7 @@
 package calendar
 
 import (
+	"github.com/dooray-go/dooray/utils"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -43,11 +44,11 @@ func TestCalendar_GetEvents_OK(t *testing.T) {
 		t.Errorf("Response did not match\nwant: %#v\n got: %#v", expectResponse, response)
 	}
 
-	if !reflect.DeepEqual(timeMin.Format(iso8601), actualTimeMin) {
-		t.Errorf("Response did not match\nwant: %#v\n got: %#v", timeMin.Format(iso8601), actualTimeMin)
+	if !reflect.DeepEqual(utils.FormatTimeToISO8601(timeMin), actualTimeMin) {
+		t.Errorf("Response did not match\nwant: %#v\n got: %#v", utils.FormatTimeToISO8601(timeMin), actualTimeMin)
 	}
 
-	if !reflect.DeepEqual(timeMax.Format(iso8601), actualTimeMax) {
-		t.Errorf("Response did not match\nwant: %#v\n got: %#v", timeMax.Format(iso8601), actualTimeMax)
+	if !reflect.DeepEqual(utils.FormatTimeToISO8601(timeMax), actualTimeMax) {
+		t.Errorf("Response did not match\nwant: %#v\n got: %#v", utils.FormatTimeToISO8601(timeMax), actualTimeMax)
 	}
 }
