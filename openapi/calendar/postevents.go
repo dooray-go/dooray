@@ -98,8 +98,6 @@ func (c *Calendar) CreateEventCustomHTTPContext(ctx context.Context, apikey stri
 		return "", fmt.Errorf("failed to marshal event request: %w", err)
 	}
 
-	fmt.Println(string(payload))
-
 	// Create the HTTP request
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
 	if err != nil {
