@@ -10,8 +10,23 @@ import (
 func TestAccount_GetMembers_OK(t *testing.T) {
 	name := "Manty"
 	userCode := "test"
+	externalEmailAddress := "manty@manty.dooray.com" 
 
-	expectResponse := `{"id":"1234567890"}`
+	expectResponse := `{
+    "header": {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": ""
+    },
+    "result": [{
+        "id": "1",                                           
+        "name": "Manty",                                       
+        "userCode": "test",                                         
+        "externalEmailAddress": "manty@manty.dooray.com"        
+
+    }],
+    "totalCount": 1                                             
+}`
 
 	var actualName string
 	var actualUserCode string
@@ -29,7 +44,7 @@ func TestAccount_GetMembers_OK(t *testing.T) {
 	server := httptest.NewServer(mux)
 	defer server.Close()
 
-	response, err := NewAccount(server.URL).GetMembers("dooray-api-key", name, userCode)
+	actualResponse, err := NewAccount(server.URL).GetMembers("dooray-api-key", name, userCode)
 	if err != nil {
 		t.Errorf("Expected not to receive error: %s", err)
 	}
@@ -38,7 +53,15 @@ func TestAccount_GetMembers_OK(t *testing.T) {
 		t.Errorf("Response did not match\nwant: %#v\n got: %#v", name, actualName)
 	}
 
-	if !reflect.DeepEqual(expectResponse, response) {
+	if !reflect.DeepEqual(userCode, actualUserCode) {
 		t.Errorf("Response did not match\nwant: %#v\n got: %#v", userCode, actualUserCode)
+	}
+
+	if !reflect.DeepEqual(expectResponse, actualResponse.RawJSON) {
+		t.Errorf("Response did not match\nwant: %#v\n got: %#v", expectResponse, actualResponse.RawJSON)
+	}
+
+	if !reflect.DeepEqual(, actualResponse.Result[0].ExternalEmailAddress) {
+		t.Errorf("Response did not match\nwant: %#v\n got: %#v", expectResponse, actualResponse.RawJSON)
 	}
 }

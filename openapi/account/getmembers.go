@@ -2,9 +2,13 @@ package account
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
+
+	"github.com/dooray-go/dooray/openapi/model/account"
+	model "github.com/dooray-go/dooray/openapi/model/account"
 )
 
 type Account struct {
@@ -23,24 +27,24 @@ func NewAccount(endPoint string) *Account {
 	}
 }
 
-func (a *Account) GetMembers(apikey string, name string, userCode string) (string, error) {
+func (a *Account) GetMembers(apikey string, name string, userCode string) (*model.GetMembersResponse, error) {
 	return a.GetMembersCustomHTTPContext(context.Background(), apikey, http.DefaultClient, name, userCode)
 }
 
-func (a *Account) GetMembersContext(ctx context.Context, apikey string, name string, userCode string) (string, error) {
+func (a *Account) GetMembersContext(ctx context.Context, apikey string, name string, userCode string) (*model.GetMembersResponse, error) {
 	return a.GetMembersCustomHTTPContext(ctx, apikey, http.DefaultClient, name, userCode)
 }
 
-func (a *Account) GetMembersCustomHTTP(apikey string, httpClient *http.Client, name string, userCode string) (string, error) {
+func (a *Account) GetMembersCustomHTTP(apikey string, httpClient *http.Client, name string, userCode string) (*model.GetMembersResponse, error) {
 	return a.GetMembersCustomHTTPContext(context.Background(), apikey, httpClient, name, userCode)
 }
 
-func (a *Account) GetMembersCustomHTTPContext(ctx context.Context, apikey string, httpClient *http.Client, name string, userCode string) (string, error) {
+func (a *Account) GetMembersCustomHTTPContext(ctx context.Context, apikey string, httpClient *http.Client, name string, userCode string) (*model.GetMembersResponse, error) {
 
 	url := a.endPoint + "/common/v1/members"
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
-		return "", fmt.Errorf("failed new request: %w", err)
+		return nil, fmt.Errorf("failed new request: %w", err)
 	}
 
 	query := req.URL.Query()
@@ -59,16 +63,23 @@ func (a *Account) GetMembersCustomHTTPContext(ctx context.Context, apikey string
 
 	resp, err := httpClient.Do(req)
 	if err != nil {
-		return "", fmt.Errorf("failed to get members: %w", err)
+		return nil, fmt.Errorf("failed to get members: %w", err)
 	}
-	defer func() {
-		resp.Body.Close()
-	}()
+	defer resp.Body.Close()
 
-	resBody, err := io.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return "", err
+		return nil, fmt.Errorf("failed to read response body: %w", err)
 	}
 
-	return string(resBody), nil
+	// Parse the response body into GetMembersResponse
+	var membersResponse account.GetMembersResponse
+	if err := json.Unmarshal(body, &membersResponse); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
+	}
+
+	// Store the raw JSON response
+	membersResponse.RawJSON = string(body)
+
+	return &membersResponse, nil
 }
