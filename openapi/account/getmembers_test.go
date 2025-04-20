@@ -22,7 +22,7 @@ func TestAccount_GetMembers_OK(t *testing.T) {
         "id": "1",                                           
         "name": "Manty",                                       
         "userCode": "test",                                         
-        "externalEmailAddress": "manty@manty.dooray.com"        
+        "externalEmailAddress": "`+externalEmailAddress+`"        
 
     }],
     "totalCount": 1                                             
@@ -61,7 +61,7 @@ func TestAccount_GetMembers_OK(t *testing.T) {
 		t.Errorf("Response did not match\nwant: %#v\n got: %#v", expectResponse, actualResponse.RawJSON)
 	}
 
-	if !reflect.DeepEqual(, actualResponse.Result[0].ExternalEmailAddress) {
-		t.Errorf("Response did not match\nwant: %#v\n got: %#v", expectResponse, actualResponse.RawJSON)
+	if !reflect.DeepEqual(externalEmailAddress, actualResponse.Result[0].ExternalEmailAddress) {
+		t.Errorf("Response did not match\nwant: %#v\n got: %#v", externalEmailAddress, actualResponse.Result[0].ExternalEmailAddress)
 	}
 }
