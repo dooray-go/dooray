@@ -14,7 +14,85 @@ func TestProject_GetPosts(t *testing.T) {
 	var actualProjectId string
 	var actualToMemberIds string
 
-	response := `{"id":"1234567890"}`
+	response := `{
+    "header": {
+        "isSuccessful": true,
+        "resultCode": 0,
+        "resultMessage": ""
+    },
+    "result": [{
+       "id": "",                                 
+       "subject": "",                            
+       "project": {                              
+           "id": "",                             
+           "code": ""                            
+       },
+       "taskNumber": "",                         
+       "closed": false,                          
+       "createdAt": "",                          
+       "dueDate": "",                            
+       "dueDateFlag": "",
+       "updatedAt": "",                          
+       "number": 1,                              
+       "priority": "",
+       "parent": {                               
+           "id": "",                             
+           "number": "",                         
+           "subject": ""                         
+       },
+       "workflowClass": "working",               
+       "milestone": {                            
+           "id": "",                             
+           "name": ""                            
+       },
+       "tags": [{                                
+           "id": ""                              
+       }],
+       "users": {                                
+           "from": {                             
+               "type": "member",                 
+               "member": {                       
+                   "organizationmemberid": ""    
+               }
+           },
+           "to": [{                               
+               "type": "member",                  
+                                                  
+               "member": {                        
+                   "organizationMemberId": ""     
+               },
+               "workflow": {
+                 "id": "1",
+                 "name": "등록"
+               }
+           },{
+               "type": "emailUser",                
+               "emailUser": {                      
+                   "emailAddress": "",              
+                   "name": ""
+               },
+               "workflow": {
+                 "id": "1",
+                 "name": "등록"
+               }
+           }],
+           "cc": [{                                
+               "type": "group",
+               "group": {                          
+                   "projectMemberGroupId": "",     
+                   "members": [{                   
+                       "organizationMemberId": ""  
+                   }]
+               }
+           }]
+       },
+      "workflow": {
+        "id": "",
+        "name": ""
+      }
+    }],
+    "totalCount": 10
+}`
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/project/v1/projects/{projectId}/posts", func(rw http.ResponseWriter, r *http.Request) {
@@ -36,7 +114,7 @@ func TestProject_GetPosts(t *testing.T) {
 		t.Errorf("Expected not to receive error: %s", err)
 	}
 
-	if !reflect.DeepEqual(response, actualResponse) {
+	if !reflect.DeepEqual(response, actualResponse.RawJSON) {
 		t.Errorf("Response did not match\nwant: %#v\n got: %#v", projectId, actualProjectId)
 	}
 

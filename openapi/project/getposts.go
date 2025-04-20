@@ -2,25 +2,28 @@ package project
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
+	model "github.com/dooray-go/dooray/openapi/model/project"
 	"io"
 	"net/http"
 )
 
-func (c *Project) GetPosts(apikey string, projectId string, toMemberIds string) (string, error) {
+func (c *Project) GetPosts(apikey string, projectId string, toMemberIds string) (*model.GetPostsResponse, error) {
 	return c.GetPostsCustomHTTPContext(context.Background(), apikey, http.DefaultClient, projectId, toMemberIds)
 }
-func (c *Project) GetPostsContext(ctx context.Context, apikey string, projectId string, toMemberIds string) (string, error) {
+func (c *Project) GetPostsContext(ctx context.Context, apikey string, projectId string, toMemberIds string) (*model.GetPostsResponse, error) {
 	return c.GetPostsCustomHTTPContext(ctx, apikey, http.DefaultClient, projectId, toMemberIds)
 }
-func (c *Project) GetPostsCustomHTTP(apikey string, httpClient *http.Client, projectId string, toMemberIds string) (string, error) {
+func (c *Project) GetPostsCustomHTTP(apikey string, httpClient *http.Client, projectId string, toMemberIds string) (*model.GetPostsResponse, error) {
 	return c.GetPostsCustomHTTPContext(context.Background(), apikey, httpClient, projectId, toMemberIds)
 }
 
-func (c *Project) GetPostsCustomHTTPContext(ctx context.Context, apikey string, httpClient *http.Client, projectId string, toMemberIds string) (string, error) {
+func (c *Project) GetPostsCustomHTTPContext(ctx context.Context, apikey string, httpClient *http.Client, projectId string, toMemberIds string) (*model.GetPostsResponse, error) {
 	url := c.endPoint + "/project/v1/projects/" + projectId + "/posts"
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	query := req.URL.Query()
@@ -35,7 +38,7 @@ func (c *Project) GetPostsCustomHTTPContext(ctx context.Context, apikey string, 
 
 	resp, err := httpClient.Do(req)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	defer func() {
 		resp.Body.Close()
@@ -43,8 +46,15 @@ func (c *Project) GetPostsCustomHTTPContext(ctx context.Context, apikey string, 
 
 	resBody, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return string(resBody), nil
+	var getpostsResponse model.GetPostsResponse
+	if err := json.Unmarshal(resBody, &getpostsResponse); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+	}
+
+	getpostsResponse.RawJSON = string(resBody)
+
+	return &getpostsResponse, nil
 }

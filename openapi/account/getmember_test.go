@@ -33,7 +33,7 @@ func TestAccount_GetMember_OK(t *testing.T) {
 		t.Errorf("Response did not match\nwant: %#v\n got: %#v", id, actual)
 	}
 
-	if !reflect.DeepEqual(expectResponse, response) {
-		t.Errorf("Response did not match\nwant: %#v\n got: %#v", expectResponse, response)
+	if !reflect.DeepEqual(expectResponse, response.RawJSON) {
+		t.Errorf("Response did not match\nwant: %#v\n got: %#v", expectResponse, response.RawJSON)
 	}
 }
