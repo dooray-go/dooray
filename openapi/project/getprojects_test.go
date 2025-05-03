@@ -16,7 +16,33 @@ func TestProject_GetProjects(t *testing.T) {
 	var actualScope string
 	var actualState string
 
-	response := `{"id":"1234567890"}`
+	response := `{
+   "header":{
+      "isSuccessful":true,
+      "resultCode":0,
+      "resultMessage":"Success"
+   },
+   "result":[
+      {
+         "id":"1",
+         "code":"techcenter",
+         "description":"기술센터 업무용 프로젝트 입니다.",
+         "state": "",
+         "scope":"public",
+         "type" : "project", 
+         "organization":{
+            "id":"1"
+         },
+         "drive":{
+            "id":"1"
+         },
+         "wiki":{
+            "id":"1"
+         }
+      }
+   ],
+   "totalCount":1
+}`
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/project/v1/projects", func(rw http.ResponseWriter, r *http.Request) {
@@ -38,7 +64,7 @@ func TestProject_GetProjects(t *testing.T) {
 		t.Errorf("Expected not to receive error: %s", err)
 	}
 
-	if !reflect.DeepEqual(response, actualResponse) {
+	if !reflect.DeepEqual(response, actualResponse.RawJSON) {
 		t.Errorf("Response did not match\nwant: %#v\n got: %#v", response, actualResponse)
 	}
 

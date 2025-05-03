@@ -1,4 +1,4 @@
-package dooray
+package hook
 
 import (
 	"encoding/json"

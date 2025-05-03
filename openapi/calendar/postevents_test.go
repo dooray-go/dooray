@@ -8,6 +8,7 @@ import (
 	"testing"
 	"time"
 
+	model "github.com/dooray-go/dooray/openapi/model/calendar"
 	"github.com/dooray-go/dooray/utils"
 )
 
@@ -50,10 +51,10 @@ func TestCreateEvent(t *testing.T) {
 	calendar := &Calendar{endPoint: mockServer.URL}
 
 	// Create a sample EventRequest
-	event := EventRequest{
-		Users:   Users{},
+	event := model.EventRequest{
+		Users:   model.Users{},
 		Subject: "Test Event",
-		Body: Body{
+		Body: model.Body{
 			MimeType: "text/html",
 			Content:  "This is a test event."},
 		StartedAt:    utils.JsonTime(time.Now()),
@@ -70,7 +71,7 @@ func TestCreateEvent(t *testing.T) {
 
 	// Verify the response
 	expectedResponse := `{"id": "12345", "status": "created"}`
-	if response != expectedResponse {
-		t.Errorf("Expected response %s, got %s", expectedResponse, response)
+	if response.RawJSON != expectedResponse {
+		t.Errorf("Expected response %s, got %s", expectedResponse, response.RawJSON)
 	}
 }

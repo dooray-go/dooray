@@ -2,25 +2,30 @@ package project
 
 import (
 	"context"
+	"encoding/json"
 	"io"
 	"net/http"
+
+	model "github.com/dooray-go/dooray/openapi/model/project"
 )
 
-func (c *Project) GetProjects(apikey string, projectType string, scope string, state string) (string, error) {
+func (c *Project) GetProjects(apikey string, projectType string, scope string, state string) (*model.GetProjectsResponse, error) {
 	return c.GetProjectsCustomHTTPContext(context.Background(), apikey, http.DefaultClient, projectType, scope, state)
 }
-func (c *Project) GetProjectsContext(ctx context.Context, apikey string, projectType string, scope string, state string) (string, error) {
+
+func (c *Project) GetProjectsContext(ctx context.Context, apikey string, projectType string, scope string, state string) (*model.GetProjectsResponse, error) {
 	return c.GetProjectsCustomHTTPContext(ctx, apikey, http.DefaultClient, projectType, scope, state)
 }
-func (c *Project) GetProjectsCustomHTTP(apikey string, httpClient *http.Client, projectType string, scope string, state string) (string, error) {
+
+func (c *Project) GetProjectsCustomHTTP(apikey string, httpClient *http.Client, projectType string, scope string, state string) (*model.GetProjectsResponse, error) {
 	return c.GetProjectsCustomHTTPContext(context.Background(), apikey, httpClient, projectType, scope, state)
 }
 
-func (c *Project) GetProjectsCustomHTTPContext(ctx context.Context, apikey string, httpClient *http.Client, projectType string, scope string, state string) (string, error) {
+func (c *Project) GetProjectsCustomHTTPContext(ctx context.Context, apikey string, httpClient *http.Client, projectType string, scope string, state string) (*model.GetProjectsResponse, error) {
 	url := c.endPoint + "/project/v1/projects"
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	query := req.URL.Query()
@@ -46,16 +51,21 @@ func (c *Project) GetProjectsCustomHTTPContext(ctx context.Context, apikey strin
 
 	resp, err := httpClient.Do(req)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-	defer func() {
-		resp.Body.Close()
-	}()
+	defer resp.Body.Close()
 
 	resBody, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return string(resBody), nil
+	var response model.GetProjectsResponse
+	if err := json.Unmarshal(resBody, &response); err != nil {
+		return nil, err
+	}
+
+	response.RawJSON = string(resBody)
+
+	return &response, nil
 }

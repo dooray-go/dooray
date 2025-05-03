@@ -9,6 +9,17 @@ import (
 )
 
 func TestPostWebhook_OK(t *testing.T) {
+	response := `{
+    "header": {
+        "resultCode": 0,
+        "resultMessage": "",
+        "isSuccessful": true
+    },
+    "result": {
+        "id": 4006824347670772680 
+    }
+}`
+
 	mux := http.NewServeMux()
 	var receivedRequest DirectSendRequest
 	mux.HandleFunc("/messenger/v1/channels/direct-send", func(rw http.ResponseWriter, r *http.Request) {
@@ -20,7 +31,7 @@ func TestPostWebhook_OK(t *testing.T) {
 			t.Errorf("Request contained invalid JSON, %s", err)
 		}
 
-		response := []byte(`{}`)
+		response := []byte(response)
 		rw.Write(response)
 	})
 	server := httptest.NewServer(mux)
@@ -31,12 +42,16 @@ func TestPostWebhook_OK(t *testing.T) {
 		OrganizationMemberId: "12321321321321",
 	}
 
-	err := NewMessenger(server.URL).DirectSend("dooray-api-key", payload)
+	actualDirectSendResponse, err := NewMessenger(server.URL).DirectSend("dooray-api-key", payload)
 	if err != nil {
 		t.Errorf("Expected not to receive error: %s", err)
 	}
 
 	if !reflect.DeepEqual(payload, &receivedRequest) {
 		t.Errorf("Payload did not match\nwant: %#v\n got: %#v", payload, receivedRequest)
+	}
+
+	if !reflect.DeepEqual(response, actualDirectSendResponse.RawJSON) {
+		t.Errorf("Payload did not match\nwant: %#v\n got: %#v", response, actualDirectSendResponse.RawJSON)
 	}
 }
