@@ -1,13 +1,16 @@
 package calendar
 
-import "github.com/dooray-go/dooray/openapi/model"
+import (
+	"encoding/json"
+	"github.com/dooray-go/dooray/openapi/model"
+)
 
 // CalendarMe represents the "me" field in the calendar response.
 type CalendarMe struct {
-	Default string `json:"default"` // "true" or "false"
+	Default bool   `json:"default"` // "true" or "false"
 	Color   string `json:"color"`
-	Listed  string `json:"listed"`  // "true" or "false"
-	Checked string `json:"checked"` // "true" or "false"
+	Listed  bool   `json:"listed"`  // "true" or "false"
+	Checked bool   `json:"checked"` // "true" or "false"
 	Role    string `json:"role"`    // e.g., "owner"
 	Order   int    `json:"order"`
 }
@@ -27,6 +30,6 @@ type Calendar struct {
 type GetCalendarsResponse struct {
 	Header     model.ResponseHeader `json:"header"`
 	Result     []Calendar           `json:"result"`
-	TotalCount string               `json:"totalCount"`
+	TotalCount json.Number          `json:"totalCount"`
 	RawJSON    string               `json:"-"` // 원본 JSON 응답 (디버깅 또는 로깅용)
 }
