@@ -1,6 +1,7 @@
 package project
 
 import (
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -79,5 +80,19 @@ func TestProject_GetProjects(t *testing.T) {
 	if !reflect.DeepEqual(state, actualState) {
 		t.Errorf("state did not match\nwant: %#v\n got: %#v", state, actualState)
 	}
+
+}
+
+func TestProject_GetProjects_For_Read(t *testing.T) {
+	projectType := "public"
+	scope := "private"
+	state := "active"
+
+	response, err := NewDefaultProject().GetProjects("", projectType, scope, state)
+	if err != nil {
+		t.Errorf("Expected not to receive error: %s", err)
+	}
+
+	fmt.Println(response)
 
 }

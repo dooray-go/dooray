@@ -8,7 +8,7 @@ This is the Dooray Client Library for Go.
 $ go get -u github.com/dooray-go/dooray
 ```
 
-## Example
+## Messenger WebHook Example
 ```go
 package main
 
@@ -30,5 +30,30 @@ func main() {
     if doorayErr != nil {
         log.Printf("dial error: %s", doorayErr.Error())
     }
+}
+```
+
+## OpenApi Example
+```go
+package main
+
+import (
+    "context"
+    "github.com/dooray-go/dooray"
+    "log"
+    "time"
+)
+
+func main() {
+	projectType := "public"
+	scope := "private"
+	state := "active"
+
+	response, err := NewDefaultProject().GetProjects("{dooray-api-key}", projectType, scope, state)
+	if err != nil {
+		t.Errorf("Expected not to receive error: %s", err)
+	}
+
+	fmt.Println(response)
 }
 ```
