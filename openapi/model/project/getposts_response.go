@@ -1,5 +1,7 @@
 package project
 
+import "github.com/dooray-go/dooray/openapi/model"
+
 type ParentInfo struct {
 	ID      string `json:"id"`      // 상위 업무 ID
 	Number  string `json:"number"`  // 상위 업무 번호
@@ -58,7 +60,7 @@ type WorkflowInfo struct {
 	Name string `json:"name"` // 워크플로우 이름
 }
 
-type GetPostsResponse struct {
+type PostInfo struct {
 	ID            string        `json:"id"`            // 업무 ID
 	Subject       string        `json:"subject"`       // 업무 제목
 	Project       ProjectInfo   `json:"project"`       // 업무가 속한 프로젝트
@@ -66,7 +68,7 @@ type GetPostsResponse struct {
 	Closed        bool          `json:"closed"`        // 업무 완료 상태
 	CreatedAt     string        `json:"createdAt"`     // 업무 생성 날짜시간 (ISO8601)
 	DueDate       string        `json:"dueDate"`       // 업무 만기 날짜시간 (ISO8601)
-	DueDateFlag   string        `json:"dueDateFlag"`   // 만기 플래그
+	DueDateFlag   bool          `json:"dueDateFlag"`   // 만기 플래그
 	UpdatedAt     string        `json:"updatedAt"`     // 업무 업데이트 날짜시간
 	Number        int           `json:"number"`        // 업무 번호
 	Priority      string        `json:"priority"`      // 우선순위
@@ -76,5 +78,11 @@ type GetPostsResponse struct {
 	Tags          []TagInfo     `json:"tags"`          // 태그 목록
 	Users         UsersInfo     `json:"users"`         // 사용자 정보
 	Workflow      WorkflowInfo  `json:"workflow"`      // 워크플로우 정보
-	RawJSON       string        `json:"-"`             // 원본 JSON 응답 (디버깅 또는 로깅용)
+}
+
+type GetPostsResponse struct {
+	Header     model.ResponseHeader `json:"header"`
+	Result     []PostInfo           `json:"result"`
+	TotalCount int                  `json:"totalCount"`
+	RawJSON    string               `json:"-"` // 원본 JSON 응답 (디버깅 또는 로깅용)
 }

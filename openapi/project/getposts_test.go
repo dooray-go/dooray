@@ -109,7 +109,7 @@ func TestProject_GetPosts(t *testing.T) {
 	server := httptest.NewServer(mux)
 	defer server.Close()
 
-	actualResponse, err := NewProject(server.URL).GetPosts("dooray-api-key", projectId, tomemberIds)
+	actualResponse, err := NewProject(server.URL).GetPosts("dooray-api-key", projectId, tomemberIds, "")
 	if err != nil {
 		t.Errorf("Expected not to receive error: %s", err)
 	}
