@@ -25,6 +25,73 @@ $ go get -u github.com/dooray-go/dooray-sdk
 | **Calendar** | Get Calendars | `GetCalendars` | Retrieve list of calendars |
 | | Get Events | `GetEvents` | Retrieve events from calendars |
 | | Create Event | `CreateEvent` | Create a new calendar event |
+| **LLM** | Anthropic Claude | `anthropic.New` | Query Claude models via unified interface |
+| | OpenAI | `openai.New` | Query GPT models via unified interface |
+| | Google Gemini | `gemini.New` | Query Gemini models via unified interface |
+| | Prompt Template | `NewPromptTemplate` | Simple `{{key}}` variable substitution |
+
+## LLM Example
+
+### Query with Anthropic Claude
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+
+    "github.com/dooray-go/dooray-sdk/llm"
+    "github.com/dooray-go/dooray-sdk/llm/anthropic"
+)
+
+func main() {
+    // ANTHROPIC_API_KEY 환경변수를 자동으로 사용합니다
+    provider, err := anthropic.New(
+        llm.WithModel("claude-sonnet-4-20250514"),
+    )
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    answer, err := provider.Query(context.Background(), "오늘 할 일을 정리해줘")
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(answer)
+}
+```
+
+### Switch Provider (OpenAI / Gemini)
+```go
+// OpenAI (OPENAI_API_KEY 환경변수 사용)
+provider, _ := openai.New(llm.WithModel("gpt-4o"))
+
+// Gemini (GEMINI_API_KEY 환경변수 사용)
+provider, _ := gemini.New(llm.WithModel("gemini-2.0-flash"))
+
+// 동일한 인터페이스로 사용
+answer, _ := provider.Query(ctx, "Hello")
+```
+
+### Prompt Template
+```go
+tmpl := llm.NewPromptTemplate("{{name}}의 오늘 일정을 요약해줘")
+prompt := tmpl.Format(map[string]string{"name": "정지범"})
+answer, _ := provider.Query(ctx, prompt)
+```
+
+### LLM + Dooray 연동
+```go
+// LLM으로 요약 생성 후 Dooray 메신저로 전송
+answer, _ := provider.Query(ctx, "오늘 회의 내용을 요약해줘")
+
+m := messenger.NewDefaultMessenger()
+m.DirectSend(apiKey, &messenger.DirectSendRequest{
+    Text:                 answer,
+    OrganizationMemberId: "member-id",
+})
+```
 
 ## Messenger WebHook Example
 ```go
