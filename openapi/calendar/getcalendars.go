@@ -10,10 +10,10 @@ import (
 )
 
 func (c *Calendar) GetCalendars(apikey string) (*model.GetCalendarsResponse, error) {
-	return c.GetCalendarsCustomHTTPContext(context.Background(), apikey, http.DefaultClient)
+	return c.GetCalendarsCustomHTTPContext(context.Background(), apikey, c.httpClient)
 }
 func (c *Calendar) GetCalendarsContext(ctx context.Context, apikey string) (*model.GetCalendarsResponse, error) {
-	return c.GetCalendarsCustomHTTPContext(ctx, apikey, http.DefaultClient)
+	return c.GetCalendarsCustomHTTPContext(ctx, apikey, c.httpClient)
 }
 func (c *Calendar) GetCalendarsCustomHTTP(apikey string, httpClient *http.Client) (*model.GetCalendarsResponse, error) {
 	return c.GetCalendarsCustomHTTPContext(context.Background(), apikey, httpClient)

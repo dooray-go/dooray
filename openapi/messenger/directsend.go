@@ -11,33 +11,17 @@ import (
 	"net/http"
 )
 
-type Messenger struct {
-	endPoint string
-}
-
-func NewDefaultMessenger() *Messenger {
-	return &Messenger{
-		endPoint: "https://api.dooray.com",
-	}
-}
-
-func NewMessenger(endPoint string) *Messenger {
-	return &Messenger{
-		endPoint: endPoint,
-	}
-}
-
 type DirectSendRequest struct {
 	Text                 string `json:"text"`
 	OrganizationMemberId string `json:"organizationMemberId"`
 }
 
 func (m Messenger) DirectSend(apikey string, msg *DirectSendRequest) (*model.DirectSendResponse, error) {
-	return m.DirectSendCustomHTTPContext(context.Background(), apikey, http.DefaultClient, msg)
+	return m.DirectSendCustomHTTPContext(context.Background(), apikey, m.httpClient, msg)
 }
 
 func (m Messenger) DirectSendContext(ctx context.Context, apikey string, msg *DirectSendRequest) (*model.DirectSendResponse, error) {
-	return m.DirectSendCustomHTTPContext(ctx, apikey, http.DefaultClient, msg)
+	return m.DirectSendCustomHTTPContext(ctx, apikey, m.httpClient, msg)
 }
 
 func (m Messenger) DirectSendCustomHTTP(apikey string, httpClient *http.Client, msg *DirectSendRequest) (*model.DirectSendResponse, error) {

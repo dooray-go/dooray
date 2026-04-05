@@ -12,11 +12,11 @@ import (
 )
 
 func (c *Project) CreatePost(apikey string, projectID string, post model.PostRequest) (*model.PostResponse, error) {
-	return c.CreatePostCustomHTTPContext(context.Background(), apikey, http.DefaultClient, projectID, post)
+	return c.CreatePostCustomHTTPContext(context.Background(), apikey, c.httpClient, projectID, post)
 }
 
 func (c *Project) CreatePostContext(ctx context.Context, apikey string, projectID string, post model.PostRequest) (*model.PostResponse, error) {
-	return c.CreatePostCustomHTTPContext(ctx, apikey, http.DefaultClient, projectID, post)
+	return c.CreatePostCustomHTTPContext(ctx, apikey, c.httpClient, projectID, post)
 }
 
 func (c *Project) CreatePostCustomHTTP(apikey string, httpClient *http.Client, projectID string, post model.PostRequest) (*model.PostResponse, error) {

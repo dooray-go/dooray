@@ -11,28 +11,12 @@ import (
 	model "github.com/dooray-go/dooray/openapi/model/account"
 )
 
-type Account struct {
-	endPoint string
-}
-
-func NewDefaultAccount() *Account {
-	return &Account{
-		endPoint: "https://api.dooray.com",
-	}
-}
-
-func NewAccount(endPoint string) *Account {
-	return &Account{
-		endPoint: endPoint,
-	}
-}
-
 func (a *Account) GetMembers(apikey string, name string, userCode string) (*model.GetMembersResponse, error) {
-	return a.GetMembersCustomHTTPContext(context.Background(), apikey, http.DefaultClient, name, userCode)
+	return a.GetMembersCustomHTTPContext(context.Background(), apikey, a.httpClient, name, userCode)
 }
 
 func (a *Account) GetMembersContext(ctx context.Context, apikey string, name string, userCode string) (*model.GetMembersResponse, error) {
-	return a.GetMembersCustomHTTPContext(ctx, apikey, http.DefaultClient, name, userCode)
+	return a.GetMembersCustomHTTPContext(ctx, apikey, a.httpClient, name, userCode)
 }
 
 func (a *Account) GetMembersCustomHTTP(apikey string, httpClient *http.Client, name string, userCode string) (*model.GetMembersResponse, error) {

@@ -1,31 +1,31 @@
-package project
+package account
 
 import (
 	"github.com/dooray-go/dooray/utils"
 	"net/http"
 )
 
-type Project struct {
+type Account struct {
 	endPoint   string
 	httpClient *http.Client
 }
 
-func NewDefaultProject() *Project {
-	return &Project{
+func NewDefaultAccount() *Account {
+	return &Account{
 		endPoint:   "https://api.dooray.com",
 		httpClient: utils.NewDefaultHTTPClient(),
 	}
 }
 
-func NewProject(endPoint string) *Project {
-	return &Project{
+func NewAccount(endPoint string) *Account {
+	return &Account{
 		endPoint:   endPoint,
 		httpClient: utils.NewDefaultHTTPClient(),
 	}
 }
 
-func NewProjectWithClient(endPoint string, httpClient *http.Client) *Project {
-	return &Project{
+func NewAccountWithClient(endPoint string, httpClient *http.Client) *Account {
+	return &Account{
 		endPoint:   endPoint,
 		httpClient: httpClient,
 	}

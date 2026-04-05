@@ -10,11 +10,11 @@ import (
 )
 
 func (c *Project) GetProjects(apikey string, projectType string, scope string, state string) (*model.GetProjectsResponse, error) {
-	return c.GetProjectsCustomHTTPContext(context.Background(), apikey, http.DefaultClient, projectType, scope, state)
+	return c.GetProjectsCustomHTTPContext(context.Background(), apikey, c.httpClient, projectType, scope, state)
 }
 
 func (c *Project) GetProjectsContext(ctx context.Context, apikey string, projectType string, scope string, state string) (*model.GetProjectsResponse, error) {
-	return c.GetProjectsCustomHTTPContext(ctx, apikey, http.DefaultClient, projectType, scope, state)
+	return c.GetProjectsCustomHTTPContext(ctx, apikey, c.httpClient, projectType, scope, state)
 }
 
 func (c *Project) GetProjectsCustomHTTP(apikey string, httpClient *http.Client, projectType string, scope string, state string) (*model.GetProjectsResponse, error) {

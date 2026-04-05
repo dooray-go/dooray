@@ -14,8 +14,10 @@ $ go get -u github.com/dooray-go/dooray
 
 | Category | Feature | Method | Description |
 |----------|---------|--------|-------------|
+| **[Socket Mode](socketmode/README.md)** | Agent | `NewAgent` | Real-time event handling via WebSocket |
 | **Messenger** | Webhook | `PostWebhook` | Send messages via webhook |
 | | Direct Send | `DirectSend` | Send direct messages to users |
+| | Send Message | `SendMessage` | Send messages to a channel |
 | **Project** | Get Projects | `GetProjects` | Retrieve list of projects |
 | | Get Posts | `GetPosts` | Retrieve posts from a project |
 | | Get Posts (Options) | `GetPostsWithOptions` | Retrieve posts with full query parameters (paging, filters, date, sort) |
