@@ -6,11 +6,24 @@ import (
 	"time"
 )
 
-type JsonTime time.Time
+type JsonTime struct {
+	time.Time
+	DateOnly bool
+}
+
+func NewJsonTime(t time.Time) JsonTime {
+	return JsonTime{Time: t}
+}
+
+func NewJsonDate(t time.Time) JsonTime {
+	return JsonTime{Time: t, DateOnly: true}
+}
 
 func (jt *JsonTime) String() string {
-	t := time.Time(*jt)
-	return FormatTimeToISO8601(t)
+	if jt.DateOnly {
+		return FormatDateOnly(jt.Time)
+	}
+	return FormatTimeToISO8601(jt.Time)
 }
 
 func (jt JsonTime) MarshalJSON() ([]byte, error) {
@@ -19,14 +32,15 @@ func (jt JsonTime) MarshalJSON() ([]byte, error) {
 
 func (jt *JsonTime) UnmarshalJSON(b []byte) error {
 	timeString := strings.Trim(string(b), `"`)
-	time, err := ConvertISO8601ToTime(timeString)
+	t, err := ConvertISO8601ToTime(timeString)
 	if err != nil {
 		return fmt.Errorf("invalid date format: %s, %v", timeString, err)
 	}
-	*jt = JsonTime(time)
+	jt.Time = t
+	jt.DateOnly = IsDateOnlyFormat(timeString)
 	return nil
 }
 
 func (jt *JsonTime) ToTime() time.Time {
-	return time.Time(*jt)
+	return jt.Time
 }
