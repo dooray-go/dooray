@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strconv"
 
-	model "github.com/dooray-go/dooray/openapi/model/project"
+	model "github.com/dooray-go/dooray-sdk/openapi/model/project"
 )
 
 // GetPostsOptions contains query parameters for the GetPosts API.

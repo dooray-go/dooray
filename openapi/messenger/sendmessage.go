@@ -5,7 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	model "github.com/dooray-go/dooray/openapi/model/messenger"
+	model "github.com/dooray-go/dooray-sdk/openapi/model/messenger"
 	"io"
 	"net/http"
 )

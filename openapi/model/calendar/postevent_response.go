@@ -1,6 +1,6 @@
 package calendar
 
-import "github.com/dooray-go/dooray/openapi/model"
+import "github.com/dooray-go/dooray-sdk/openapi/model"
 
 // EventResponseResult represents the result part of the API response.
 type EventResponseResult struct {

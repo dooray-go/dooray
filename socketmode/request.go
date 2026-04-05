@@ -1,6 +1,6 @@
 package socketmode
 
-import "github.com/dooray-go/dooray/openapi/messenger"
+import "github.com/dooray-go/dooray-sdk/openapi/messenger"
 
 // SocketModeRequest represents an incoming event from the Dooray WebSocket connection.
 type SocketModeRequest struct {

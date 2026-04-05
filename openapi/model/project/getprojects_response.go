@@ -1,6 +1,6 @@
 package project
 
-import "github.com/dooray-go/dooray/openapi/model"
+import "github.com/dooray-go/dooray-sdk/openapi/model"
 
 type GetProjectsResponse struct {
 	Header     model.ResponseHeader `json:"header"`

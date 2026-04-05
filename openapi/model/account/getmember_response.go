@@ -1,6 +1,6 @@
 package account
 
-import "github.com/dooray-go/dooray/openapi/model"
+import "github.com/dooray-go/dooray-sdk/openapi/model"
 
 // DefaultOrganization represents the default organization information in the response.
 type DefaultOrganization struct {

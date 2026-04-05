@@ -1,6 +1,6 @@
 package calendar
 
-import "github.com/dooray-go/dooray/openapi/model"
+import "github.com/dooray-go/dooray-sdk/openapi/model"
 
 // Calendar represents the calendar information in the event.
 type GetEventsCalendar struct {

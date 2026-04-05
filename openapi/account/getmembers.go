@@ -7,8 +7,8 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/dooray-go/dooray/openapi/model/account"
-	model "github.com/dooray-go/dooray/openapi/model/account"
+	"github.com/dooray-go/dooray-sdk/openapi/model/account"
+	model "github.com/dooray-go/dooray-sdk/openapi/model/account"
 )
 
 func (a *Account) GetMembers(apikey string, name string, userCode string) (*model.GetMembersResponse, error) {

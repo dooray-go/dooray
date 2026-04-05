@@ -8,7 +8,7 @@ import (
 	"io"
 	"net/http"
 
-	model "github.com/dooray-go/dooray/openapi/model/calendar"
+	model "github.com/dooray-go/dooray-sdk/openapi/model/calendar"
 )
 
 func (c *Calendar) CreateEvent(apikey string, calendarID string, event model.EventRequest) (*model.EventResponse, error) {

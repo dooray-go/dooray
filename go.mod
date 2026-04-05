@@ -1,4 +1,4 @@
-module github.com/dooray-go/dooray
+module github.com/dooray-go/dooray-sdk
 
 go 1.22.1
 

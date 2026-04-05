@@ -7,7 +7,7 @@ This library is based on the [Dooray! API Documentation](https://helpdesk.dooray
 ## Installing
 ### go get
 ```
-$ go get -u github.com/dooray-go/dooray
+$ go get -u github.com/dooray-go/dooray-sdk
 ```
 
 ## Features
@@ -32,7 +32,7 @@ package main
 
 import (
     "context"
-    "github.com/dooray-go/dooray"
+    "github.com/dooray-go/dooray-sdk"
     "log"
     "time"
 )
@@ -61,7 +61,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/dooray-go/dooray/openapi/project"
+    "github.com/dooray-go/dooray-sdk/openapi/project"
 )
 
 func main() {
@@ -89,7 +89,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/dooray-go/dooray/openapi/project"
+    "github.com/dooray-go/dooray-sdk/openapi/project"
 )
 
 func main() {
@@ -139,9 +139,9 @@ import (
     "log"
     "time"
 
-    "github.com/dooray-go/dooray/openapi/project"
-    model "github.com/dooray-go/dooray/openapi/model/project"
-    "github.com/dooray-go/dooray/utils"
+    "github.com/dooray-go/dooray-sdk/openapi/project"
+    model "github.com/dooray-go/dooray-sdk/openapi/model/project"
+    "github.com/dooray-go/dooray-sdk/utils"
 )
 
 func main() {

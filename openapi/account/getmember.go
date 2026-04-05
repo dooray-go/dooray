@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	model "github.com/dooray-go/dooray/openapi/model/account" // 모델 패키지 임포트 추가
+	model "github.com/dooray-go/dooray-sdk/openapi/model/account" // 모델 패키지 임포트 추가
 )
 
 func (a *Account) GetMember(apikey string, id string) (*model.GetMemberResponse, error) { // 반환 타입 수정
