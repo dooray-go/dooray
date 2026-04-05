@@ -57,8 +57,8 @@ func TestCreateEvent(t *testing.T) {
 		Body: model.Body{
 			MimeType: "text/html",
 			Content:  "This is a test event."},
-		StartedAt:    utils.JsonTime(time.Now()),
-		EndedAt:      utils.JsonTime(time.Now().Add(1 * time.Hour)),
+		StartedAt:    utils.NewJsonTime(time.Now()),
+		EndedAt:      utils.NewJsonTime(time.Now().Add(1 * time.Hour)),
 		WholeDayFlag: false,
 		Location:     "Test Location",
 	}

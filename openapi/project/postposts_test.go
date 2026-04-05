@@ -83,7 +83,7 @@ func TestCreatePost(t *testing.T) {
 	project := NewProject(mockServer.URL)
 
 	// Create due date
-	dueDate := utils.JsonTime(time.Now().Add(24 * time.Hour))
+	dueDate := utils.NewJsonTime(time.Now().Add(24 * time.Hour))
 
 	// Create a sample PostRequest
 	postRequest := model.PostRequest{
