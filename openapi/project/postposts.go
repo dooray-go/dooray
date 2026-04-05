@@ -8,7 +8,7 @@ import (
 	"io"
 	"net/http"
 
-	model "github.com/dooray-go/dooray/openapi/model/project"
+	model "github.com/dooray-go/dooray-sdk/openapi/model/project"
 )
 
 func (c *Project) CreatePost(apikey string, projectID string, post model.PostRequest) (*model.PostResponse, error) {

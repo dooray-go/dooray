@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"time"
 
-	model "github.com/dooray-go/dooray/openapi/model/calendar"
-	"github.com/dooray-go/dooray/utils"
+	model "github.com/dooray-go/dooray-sdk/openapi/model/calendar"
+	"github.com/dooray-go/dooray-sdk/utils"
 )
 
 func (c *Calendar) GetEvents(apikey string, calendars string, timeMin time.Time, timeMax time.Time) (*model.EventsResponse, error) {

@@ -1,7 +1,7 @@
 package calendar
 
 import (
-	"github.com/dooray-go/dooray/utils"
+	"github.com/dooray-go/dooray-sdk/utils"
 	"net/http"
 	"net/http/httptest"
 	"reflect"

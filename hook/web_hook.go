@@ -5,7 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/dooray-go/dooray/utils"
+	"github.com/dooray-go/dooray-sdk/utils"
 	"io"
 	"net/http"
 )

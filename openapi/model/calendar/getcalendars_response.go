@@ -2,7 +2,7 @@ package calendar
 
 import (
 	"encoding/json"
-	"github.com/dooray-go/dooray/openapi/model"
+	"github.com/dooray-go/dooray-sdk/openapi/model"
 )
 
 // CalendarMe represents the "me" field in the calendar response.

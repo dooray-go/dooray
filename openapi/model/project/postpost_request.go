@@ -1,6 +1,6 @@
 package project
 
-import "github.com/dooray-go/dooray/utils"
+import "github.com/dooray-go/dooray-sdk/utils"
 
 // PostMember represents a member in the post.
 type PostMember struct {

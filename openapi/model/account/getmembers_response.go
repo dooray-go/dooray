@@ -1,6 +1,6 @@
 package account
 
-import "github.com/dooray-go/dooray/openapi/model"
+import "github.com/dooray-go/dooray-sdk/openapi/model"
 
 // Member represents a single member in the API response.
 type Member struct {

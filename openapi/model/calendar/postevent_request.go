@@ -1,6 +1,6 @@
 package calendar
 
-import "github.com/dooray-go/dooray/utils"
+import "github.com/dooray-go/dooray-sdk/utils"
 
 // Member represents a member in the event.
 type Member struct {

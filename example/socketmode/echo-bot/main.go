@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/dooray-go/dooray/socketmode"
+	"github.com/dooray-go/dooray-sdk/socketmode"
 )
 
 func main() {

@@ -1,7 +1,7 @@
 package project
 
 import (
-	"github.com/dooray-go/dooray/openapi/model"
+	"github.com/dooray-go/dooray-sdk/openapi/model"
 )
 
 type ParentInfo struct {

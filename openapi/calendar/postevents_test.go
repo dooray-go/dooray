@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	model "github.com/dooray-go/dooray/openapi/model/calendar"
-	"github.com/dooray-go/dooray/utils"
+	model "github.com/dooray-go/dooray-sdk/openapi/model/calendar"
+	"github.com/dooray-go/dooray-sdk/utils"
 )
 
 func TestCreateEvent(t *testing.T) {

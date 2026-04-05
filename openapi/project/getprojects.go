@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 
-	model "github.com/dooray-go/dooray/openapi/model/project"
+	model "github.com/dooray-go/dooray-sdk/openapi/model/project"
 )
 
 func (c *Project) GetProjects(apikey string, projectType string, scope string, state string) (*model.GetProjectsResponse, error) {

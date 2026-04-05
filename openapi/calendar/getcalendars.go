@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	model "github.com/dooray-go/dooray/openapi/model/calendar"
+	model "github.com/dooray-go/dooray-sdk/openapi/model/calendar"
 	"io"
 	"net/http"
 )

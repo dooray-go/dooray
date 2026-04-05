@@ -14,8 +14,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/dooray-go/dooray/openapi/messenger"
-	"github.com/dooray-go/dooray/utils"
+	"github.com/dooray-go/dooray-sdk/openapi/messenger"
+	"github.com/dooray-go/dooray-sdk/utils"
 	"github.com/gorilla/websocket"
 )
 
