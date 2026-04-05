@@ -45,7 +45,7 @@ func (c *Project) GetPosts(apikey string, projectId string, toMemberIds string, 
 		ToMemberIds:         toMemberIds,
 		PostWorkflowClasses: postWorkflowClasses,
 	}
-	return c.GetPostsWithOptionsCustomHTTPContext(context.Background(), apikey, http.DefaultClient, projectId, opts)
+	return c.GetPostsWithOptionsCustomHTTPContext(context.Background(), apikey, c.httpClient, projectId, opts)
 }
 
 func (c *Project) GetPostsContext(ctx context.Context, apikey string, projectId string, toMemberIds string, postWorkflowClasses string) (*model.GetPostsResponse, error) {
@@ -53,7 +53,7 @@ func (c *Project) GetPostsContext(ctx context.Context, apikey string, projectId 
 		ToMemberIds:         toMemberIds,
 		PostWorkflowClasses: postWorkflowClasses,
 	}
-	return c.GetPostsWithOptionsCustomHTTPContext(ctx, apikey, http.DefaultClient, projectId, opts)
+	return c.GetPostsWithOptionsCustomHTTPContext(ctx, apikey, c.httpClient, projectId, opts)
 }
 
 func (c *Project) GetPostsCustomHTTP(apikey string, httpClient *http.Client, projectId string, toMemberIds string, postWorkflowClasses string) (*model.GetPostsResponse, error) {
@@ -74,11 +74,11 @@ func (c *Project) GetPostsCustomHTTPContext(ctx context.Context, apikey string, 
 
 // GetPostsWithOptions retrieves posts with full query parameter support.
 func (c *Project) GetPostsWithOptions(apikey string, projectId string, opts GetPostsOptions) (*model.GetPostsResponse, error) {
-	return c.GetPostsWithOptionsCustomHTTPContext(context.Background(), apikey, http.DefaultClient, projectId, opts)
+	return c.GetPostsWithOptionsCustomHTTPContext(context.Background(), apikey, c.httpClient, projectId, opts)
 }
 
 func (c *Project) GetPostsWithOptionsContext(ctx context.Context, apikey string, projectId string, opts GetPostsOptions) (*model.GetPostsResponse, error) {
-	return c.GetPostsWithOptionsCustomHTTPContext(ctx, apikey, http.DefaultClient, projectId, opts)
+	return c.GetPostsWithOptionsCustomHTTPContext(ctx, apikey, c.httpClient, projectId, opts)
 }
 
 func (c *Project) GetPostsWithOptionsCustomHTTP(apikey string, httpClient *http.Client, projectId string, opts GetPostsOptions) (*model.GetPostsResponse, error) {

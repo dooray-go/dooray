@@ -1,31 +1,31 @@
-package project
+package messenger
 
 import (
 	"github.com/dooray-go/dooray/utils"
 	"net/http"
 )
 
-type Project struct {
+type Messenger struct {
 	endPoint   string
 	httpClient *http.Client
 }
 
-func NewDefaultProject() *Project {
-	return &Project{
+func NewDefaultMessenger() *Messenger {
+	return &Messenger{
 		endPoint:   "https://api.dooray.com",
 		httpClient: utils.NewDefaultHTTPClient(),
 	}
 }
 
-func NewProject(endPoint string) *Project {
-	return &Project{
+func NewMessenger(endPoint string) *Messenger {
+	return &Messenger{
 		endPoint:   endPoint,
 		httpClient: utils.NewDefaultHTTPClient(),
 	}
 }
 
-func NewProjectWithClient(endPoint string, httpClient *http.Client) *Project {
-	return &Project{
+func NewMessengerWithClient(endPoint string, httpClient *http.Client) *Messenger {
+	return &Messenger{
 		endPoint:   endPoint,
 		httpClient: httpClient,
 	}

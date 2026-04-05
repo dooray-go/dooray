@@ -24,12 +24,14 @@ type Attachment struct {
 	Color     string `json:"color"`
 }
 
+var defaultHTTPClient = utils.NewDefaultHTTPClient()
+
 func PostWebhook(url string, msg *WebhookMessage) error {
-	return PostWebhookCustomHTTPContext(context.Background(), url, http.DefaultClient, msg)
+	return PostWebhookCustomHTTPContext(context.Background(), url, defaultHTTPClient, msg)
 }
 
 func PostWebhookContext(ctx context.Context, url string, msg *WebhookMessage) error {
-	return PostWebhookCustomHTTPContext(ctx, url, http.DefaultClient, msg)
+	return PostWebhookCustomHTTPContext(ctx, url, defaultHTTPClient, msg)
 }
 
 func PostWebhookCustomHTTP(url string, httpClient *http.Client, msg *WebhookMessage) error {

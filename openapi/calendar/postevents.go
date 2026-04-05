@@ -12,10 +12,10 @@ import (
 )
 
 func (c *Calendar) CreateEvent(apikey string, calendarID string, event model.EventRequest) (*model.EventResponse, error) {
-	return c.CreateEventCustomHTTPContext(context.Background(), apikey, http.DefaultClient, calendarID, event)
+	return c.CreateEventCustomHTTPContext(context.Background(), apikey, c.httpClient, calendarID, event)
 }
 func (c *Calendar) CreateEventContext(ctx context.Context, apikey string, calendarID string, event model.EventRequest) (*model.EventResponse, error) {
-	return c.CreateEventCustomHTTPContext(ctx, apikey, http.DefaultClient, calendarID, event)
+	return c.CreateEventCustomHTTPContext(ctx, apikey, c.httpClient, calendarID, event)
 }
 func (c *Calendar) CreateEventCustomHTTP(apikey string, httpClient *http.Client, calendarID string, event model.EventRequest) (*model.EventResponse, error) {
 	return c.CreateEventCustomHTTPContext(context.Background(), apikey, httpClient, calendarID, event)

@@ -13,10 +13,10 @@ import (
 )
 
 func (c *Calendar) GetEvents(apikey string, calendars string, timeMin time.Time, timeMax time.Time) (*model.EventsResponse, error) {
-	return c.GetEventsCustomHTTPContext(context.Background(), apikey, http.DefaultClient, calendars, timeMin, timeMax)
+	return c.GetEventsCustomHTTPContext(context.Background(), apikey, c.httpClient, calendars, timeMin, timeMax)
 }
 func (c *Calendar) GetEventsContext(ctx context.Context, apikey string, calendars string, timeMin time.Time, timeMax time.Time) (*model.EventsResponse, error) {
-	return c.GetEventsCustomHTTPContext(ctx, apikey, http.DefaultClient, calendars, timeMin, timeMax)
+	return c.GetEventsCustomHTTPContext(ctx, apikey, c.httpClient, calendars, timeMin, timeMax)
 }
 func (c *Calendar) GetEventsCustomHTTP(apikey string, httpClient *http.Client, calendars string, timeMin time.Time, timeMax time.Time) (*model.EventsResponse, error) {
 	return c.GetEventsCustomHTTPContext(context.Background(), apikey, httpClient, calendars, timeMin, timeMax)

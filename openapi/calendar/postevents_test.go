@@ -48,7 +48,7 @@ func TestCreateEvent(t *testing.T) {
 	defer mockServer.Close()
 
 	// Create a Calendar instance with the mock server endpoint
-	calendar := &Calendar{endPoint: mockServer.URL}
+	calendar := NewCalendar(mockServer.URL)
 
 	// Create a sample EventRequest
 	event := model.EventRequest{

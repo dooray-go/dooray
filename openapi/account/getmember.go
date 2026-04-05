@@ -11,11 +11,11 @@ import (
 )
 
 func (a *Account) GetMember(apikey string, id string) (*model.GetMemberResponse, error) { // 반환 타입 수정
-	return a.GetMemberCustomHTTPContext(context.Background(), apikey, http.DefaultClient, id)
+	return a.GetMemberCustomHTTPContext(context.Background(), apikey, a.httpClient, id)
 }
 
 func (a *Account) GetMemberContext(ctx context.Context, apikey string, id string) (*model.GetMemberResponse, error) { // 반환 타입 수정
-	return a.GetMemberCustomHTTPContext(ctx, apikey, http.DefaultClient, id)
+	return a.GetMemberCustomHTTPContext(ctx, apikey, a.httpClient, id)
 }
 
 func (a *Account) GetMemberCustomHTTP(apikey string, httpClient *http.Client, id string) (*model.GetMemberResponse, error) { // 반환 타입 수정
