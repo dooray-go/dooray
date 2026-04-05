@@ -1,10 +1,14 @@
 package project
 
-import "github.com/dooray-go/dooray/openapi/model"
+import (
+	"encoding/json"
+
+	"github.com/dooray-go/dooray/openapi/model"
+)
 
 type ParentInfo struct {
 	ID      string `json:"id"`      // 상위 업무 ID
-	Number  string `json:"number"`  // 상위 업무 번호
+	Number  json.Number `json:"number"`  // 상위 업무 번호
 	Subject string `json:"subject"` // 상위 업무 제목
 }
 

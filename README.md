@@ -18,6 +18,7 @@ $ go get -u github.com/dooray-go/dooray
 | | Direct Send | `DirectSend` | Send direct messages to users |
 | **Project** | Get Projects | `GetProjects` | Retrieve list of projects |
 | | Get Posts | `GetPosts` | Retrieve posts from a project |
+| | Get Posts (Options) | `GetPostsWithOptions` | Retrieve posts with full query parameters (paging, filters, date, sort) |
 | | Create Post | `CreatePost` | Create a new post in a project |
 | **Calendar** | Get Calendars | `GetCalendars` | Retrieve list of calendars |
 | | Get Events | `GetEvents` | Retrieve events from calendars |
@@ -62,15 +63,11 @@ import (
 )
 
 func main() {
-    // Create a project client
     projectClient := project.NewDefaultProject()
-
-    // Get posts from a project
     projectID := "your-project-id"
-    toMemberIds := "member-id-1,member-id-2" // Optional: filter by member IDs
-    postWorkflowClasses := "registered,working" // Optional: filter by workflow classes
 
-    response, err := projectClient.GetPosts("your-dooray-api-key", projectID, toMemberIds, postWorkflowClasses)
+    // Simple: filter by member IDs and workflow classes
+    response, err := projectClient.GetPosts("your-dooray-api-key", projectID, "member-id-1,member-id-2", "registered,working")
     if err != nil {
         log.Fatalf("Failed to get posts: %s", err)
     }
@@ -78,6 +75,55 @@ func main() {
     fmt.Printf("Total posts: %d\n", response.TotalCount)
     for _, post := range response.Result {
         fmt.Printf("Post #%d: %s\n", post.Number, post.Subject)
+    }
+}
+```
+
+### Get Posts with Options
+```go
+package main
+
+import (
+    "fmt"
+    "log"
+
+    "github.com/dooray-go/dooray/openapi/project"
+)
+
+func main() {
+    projectClient := project.NewDefaultProject()
+    projectID := "your-project-id"
+
+    size := 10
+    page := 0
+    toMemberSize := 1
+
+    response, err := projectClient.GetPostsWithOptions("your-dooray-api-key", projectID, project.GetPostsOptions{
+        // Paging
+        Page: &page,
+        Size: &size,
+
+        // Filters
+        PostWorkflowClasses: "registered,working",
+        ToMemberIds:         "member-id",
+        ToMemberSize:        &toMemberSize,  // 1: toMemberIds[0]이 혼자 담당인 업무
+        TagIds:              "tag-id-1,tag-id-2",
+        MilestoneIds:        "milestone-id",
+
+        // Date filters (today, thisweek, prev-{N}d, next-{N}d, or ISO8601 range)
+        CreatedAt: "prev-7d",
+        DueAt:     "next-30d",
+
+        // Sort (prefix with - for descending)
+        Order: "-createdAt",
+    })
+    if err != nil {
+        log.Fatalf("Failed to get posts: %s", err)
+    }
+
+    fmt.Printf("Total posts: %d\n", response.TotalCount)
+    for _, post := range response.Result {
+        fmt.Printf("Post #%d: %s (status: %s)\n", post.Number, post.Subject, post.WorkflowClass)
     }
 }
 ```
